@@ -22,6 +22,7 @@ public class BankAccountMutation implements GraphQLMutationResolver {
 
   private final Clock clock;
 
+  //here we are using the bean validation too
   public BankAccount createBankAccount(@Valid CreateBankAccountInput input) {
     log.info("Creating bank account for {}", input);
     return BankAccount.builder().id(UUID.randomUUID()).currency(Currency.USD)

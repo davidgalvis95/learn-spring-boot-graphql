@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CursorUtil {
 
+  //TODO Analyze this code better
   public ConnectionCursor createCursorWith(UUID id) {
     return new DefaultConnectionCursor(
         Base64.getEncoder().encodeToString(id.toString().getBytes(StandardCharsets.UTF_8)));

@@ -1,3 +1,4 @@
+#This is an input type that will only work for the mutations
 input CreateBankAccountInput {
     firstName: String!
     age: NonNegativeInt!

@@ -12,6 +12,7 @@ server:
 graphql:
   servlet:
     maxQueryDepth: 100
+    ##This is to enable the exception handling withing a graphql request
     exception-handlers-enabled: true
     tracingEnabled: false
   playground:
@@ -27,4 +28,5 @@ voyager:
 
 logging:
   pattern:
+    #    This part %clr(%X{correlation_id}){red} was added to this property of the CONSOLE_LOG_PATTERN found in defaults.xml file to print the correlation id in red
     console: -%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %clr(%X{correlation_id}){red} %m%n%wEx

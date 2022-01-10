@@ -1,3 +1,10 @@
+#This scalars are possible thanks to the ExtendedScalars library
+#To make use of them we need to:
+#1. Declare them in the root of the query/mutation schema, and then
+#2. We will be able to make use of those inside the objects of the schema, e.g. CreateBankAccountInput input type
+#3. Tell the system that we want to use a scalar of that type, and to do that we create a bean of that type
+# as the one created in the ScalarConfig class
+#To implement our own one we just need to implement the GraphQLScalarType interface
 scalar NonNegativeInt
 scalar DateTime
 scalar Date

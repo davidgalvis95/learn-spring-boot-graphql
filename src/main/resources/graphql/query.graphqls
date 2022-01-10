@@ -1,4 +1,6 @@
 # All available queries on this graphql server
+# noinspection GraphQLUnresolvedReference
+#TODO Analyze this code
 type Query {
     bankAccount(id: ID): BankAccount
     bankAccounts(first: Int!, after: String): BankAccountConnection @connection (for: "BankAccount")

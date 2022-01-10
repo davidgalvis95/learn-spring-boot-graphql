@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CustomGraphQLContextBuilder implements GraphQLServletContextBuilder {
 
+  //This is a dataloader that will create a dataloader registry per network request
   private final DataLoaderRegistryFactory dataLoaderRegistryFactory;
 
   @Override
@@ -34,6 +35,7 @@ public class CustomGraphQLContextBuilder implements GraphQLServletContextBuilder
     return new CustomGraphQLContext(userId, context);
   }
 
+  //Since we do not support websockets we do not use the following methods but throw an exception
   @Override
   public GraphQLContext build(Session session, HandshakeRequest handshakeRequest) {
     throw new IllegalStateException("Unsupported");

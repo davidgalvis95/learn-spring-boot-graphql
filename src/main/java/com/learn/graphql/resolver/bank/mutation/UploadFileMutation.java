@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UploadFileMutation implements GraphQLMutationResolver {
 
+  //The DataFetchingEnvironment needs to be the last parameter in the method and the framework, in this case spring injects it automatically
   public UUID uploadFile(DataFetchingEnvironment environment) {
     DefaultGraphQLServletContext context = environment.getContext();
 

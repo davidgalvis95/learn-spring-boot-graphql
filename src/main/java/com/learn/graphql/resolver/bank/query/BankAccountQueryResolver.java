@@ -24,22 +24,31 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
 
+//The way GraphQL works is that it first executes the GraphQLQueryResolver then it executes the normal GraphQLResolver
 @Slf4j
 @Component
 @RequiredArgsConstructor
+// you want to query on the root object you should use the GraphQLQueryResolver otherwise if there are being
+//queries that are for nested objects we should use GraphQLResolver
 public class BankAccountQueryResolver implements GraphQLQueryResolver {
 
   private final BankAccountRepository bankAccountRepository;
   private final CursorUtil cursorUtil;
   private final Clock clock;
 
+  //The DataFetchingEnvironment contains pretty useful methods to get for example the context(to get the auth), or the selection set
+  //which are the fields requested by the user, also to get the arguments, the data loaders
   public BankAccount bankAccount(UUID id, DataFetchingEnvironment environment) {
     log.info("Retrieving bank account id: {}", id);
 
+    //Now, due that we've created a custom context, that is the one which will be used to get access to the
+    //Entire context
     CustomGraphQLContext context = environment.getContext();
 
     log.info("User ID: {}", context.getUserId());
 
+    //The selection set contains the fields that the user wants to see from the query
+    //based on the selection set we can apply the contains method which allows us to decide whether we want to apply a special logic
     var requestedFields = environment.getSelectionSet().getFields().stream()
         .map(SelectedField::getName).collect(Collectors.toUnmodifiableSet());
 
@@ -53,12 +62,17 @@ public class BankAccountQueryResolver implements GraphQLQueryResolver {
         .build();
   }
 
+  //TODO Analyze this code better
+  //this is for pagination
+  //This is creating the code for the pagination creating edges based on the first and the cursors
+  //which will be b64 encoded
   public Connection<BankAccount> bankAccounts(int first, @Nullable String cursor) {
     List<Edge<BankAccount>> edges = getBankAccounts(cursor)
         .stream()
         .map(bankAccount -> new DefaultEdge<>(bankAccount,
             cursorUtil.createCursorWith(bankAccount.getId())))
-        .limit(first)
+            //This limits the amount of results based on what's passed through
+            .limit(first)
         .collect(Collectors.toUnmodifiableList());
 
     var pageInfo = new DefaultPageInfo(

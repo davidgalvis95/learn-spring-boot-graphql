@@ -19,17 +19,21 @@ public class DataLoaderRegistryFactory {
 
   private final BalanceService balanceService;
 
+  //This is to pull from the query
   public static final String BALANCE_DATA_LOADER = "BALANCE_DATA_LOADER";
   private static final Executor balanceThreadPool =
       CorrelationIdPropagationExecutor.wrap(
           Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()));
 
   public DataLoaderRegistry create(String userId) {
+    //This registry will be used to this request shared amongst queries
     var registry = new DataLoaderRegistry();
+    //Here we will register a data loader, passing a string an the data loader that receives a key and a value
     registry.register(BALANCE_DATA_LOADER, createBalanceDataLoader(userId));
     return registry;
   }
 
+  //This is going to be invoked when the load method is called
   private DataLoader<UUID, BigDecimal> createBalanceDataLoader(String userId) {
     return DataLoader.newMappedDataLoader((Set<UUID> bankAccountIds) ->
         CompletableFuture.supplyAsync(() ->

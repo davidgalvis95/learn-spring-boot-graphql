@@ -11,8 +11,11 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
+//These listeners are used as hooks to perform certain logic based on certain logic
+//We do so by implementing the GraphQLServletListener
 public class LoggingListener implements GraphQLServletListener {
 
+  //These are called from the AbstractGraphQLHttpServlet
   @Override
   public RequestCallback onRequest(HttpServletRequest request, HttpServletResponse response) {
     return new RequestCallback() {

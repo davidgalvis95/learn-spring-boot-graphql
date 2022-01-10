@@ -12,11 +12,15 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.dataloader.DataLoaderRegistry;
 
+//This is a custom context that by implementing the GraphQLServletContext, in this case will be available
+//To the DataFetchEnvironment when querying for the context in there, and then to the queries and mutation resolvers
 @Getter
 @RequiredArgsConstructor
 public class CustomGraphQLContext implements GraphQLServletContext {
 
   private final String userId;
+  //We are implementing this one and passing this one as a constructor parameter to make use of all the delegate
+  //methods
   private final GraphQLServletContext context;
 
   @Override
