@@ -65,6 +65,13 @@ public class AuthenticationConnectionListener implements ApolloSubscriptionConne
   public void onStart(SubscriptionSession session, OperationMessage message) {
     log.info("onStart with payload {}", message.getPayload());
     var authentication = (Authentication) session.getUserProperties().get(AUTHENTICATION);
+    //The SecurityContextHolder was set here with the authentication token because here what this class does
+    //is put some hooks for each stage, and since here when using websockets there are not header sent, frames are sent instead
+    //so, we need to make use of this ApolloSubscriptionConnectionListener implementation to pass the frames through
+    //And since the frames of the authentication request payload, and the request payload are passed separately
+    //Chances are that they can be passed to a different thread, if there is not much latency among the 2 they will be
+    //In the same thread, otherwise they will be passed to a different one...But the session will never change, thats why
+    //The authentication token is attached to the session and passed to the next hook
     SecurityContextHolder.getContext().setAuthentication(authentication);
   }
 
