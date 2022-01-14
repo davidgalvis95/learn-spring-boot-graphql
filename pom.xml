@@ -22,6 +22,7 @@
     <graphql.version>11.0.0</graphql.version>
     <!-- 16.0.0 not on central -->
     <graphql.extended.scalars.version>15.0.0</graphql.extended.scalars.version>
+<!--    This is the library that is used to validate on schemas-->
     <graphql.extended.validation.version>16.0.0</graphql.extended.validation.version>
   </properties>
 

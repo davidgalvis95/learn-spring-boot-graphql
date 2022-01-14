@@ -17,6 +17,7 @@ public class BankAccountSubscription implements GraphQLSubscriptionResolver {
 
   private final BankAccountPublisher bankAccountPublisher;
 
+  //This is a publisher that uses reactor to subscribe to an event, and it does that synchronously
   public Publisher<BankAccount> bankAccounts() {
     return bankAccountPublisher.getBankAccountPublisher();
   }

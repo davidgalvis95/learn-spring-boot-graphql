@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ValidationDirectiveConfig {
 
+  //This bean is created to wire the annotations of the validation into the schemas
   @Bean
   public ValidationSchemaWiring validationSchemaWiring() {
     // Contains the default validation @Directive constraints
